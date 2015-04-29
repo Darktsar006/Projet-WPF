@@ -1,0 +1,251 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Test1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Test1StoreContainer">
+    <EntitySet Name="Questions" EntityType="Test1.Store.Questions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Teachers" EntityType="Test1.Store.Teachers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Notations" EntityType="Test1.Store.Notations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Courses" EntityType="Test1.Store.Courses" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_TeacherNotation" Association="Test1.Store.FK_TeacherNotation">
+      <End Role="Teacher" EntitySet="Teachers" />
+      <End Role="Notation" EntitySet="Notations" />
+    </AssociationSet>
+    <AssociationSet Name="CourseQuestion" Association="Test1.Store.CourseQuestion">
+      <End Role="Course" EntitySet="Courses" />
+      <End Role="Question" EntitySet="Questions" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Questions">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="content" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="bonus" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="CourseId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Teachers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="firstname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="campus" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="campus_would_teach" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="campus_already_teach" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="courses_already_teach" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="courses_would_teach" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="current_promotion" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="comments" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Notations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="certification" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="validation" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="matiere" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="TeacherId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Courses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_TeacherNotation">
+    <End Role="Teacher" Type="Test1.Store.Teachers" Multiplicity="1" />
+    <End Role="Notation" Type="Test1.Store.Notations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teacher">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Notation">
+        <PropertyRef Name="TeacherId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CourseQuestion">
+    <End Role="Course" Type="Test1.Store.Courses" Multiplicity="1" />
+    <End Role="Question" Type="Test1.Store.Questions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Question">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Test1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="Test1Container" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Questions" EntityType="Test1.Question" />
+          <EntitySet Name="Teachers" EntityType="Test1.Teacher" />
+          <EntitySet Name="Notations" EntityType="Test1.Notation" />
+          <AssociationSet Name="FK_TeacherNotation" Association="Test1.FK_TeacherNotation">
+            <End Role="Teacher" EntitySet="Teachers" />
+            <End Role="Notation" EntitySet="Notations" />
+          </AssociationSet>
+          <EntitySet Name="Courses" EntityType="Test1.Course" />
+          <AssociationSet Name="CourseQuestion" Association="Test1.CourseQuestion">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Question" EntitySet="Questions" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="content" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="bonus" Type="String" Unicode="true" FixedLength="false" MaxLength="Max" />
+          <NavigationProperty Name="Course" Relationship="Test1.CourseQuestion" FromRole="Question" ToRole="Course" />
+          <Property Name="CourseId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="firstname" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="campus" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="campus_would_teach" Type="String" Unicode="true" FixedLength="false" MaxLength="Max" />
+          <Property Name="campus_already_teach" Type="String" Unicode="true" FixedLength="false" MaxLength="Max" Nullable="true" />
+          <Property Name="courses_already_teach" Type="String" Unicode="true" FixedLength="false" MaxLength="Max" Nullable="true" />
+          <Property Name="courses_would_teach" Type="String" Unicode="true" FixedLength="false" MaxLength="Max" />
+          <Property Name="current_promotion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Notations" Relationship="Test1.FK_TeacherNotation" FromRole="Teacher" ToRole="Notation" />
+        </EntityType>
+        <EntityType Name="Notation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="certification" Type="String" Unicode="true" FixedLength="false" MaxLength="Max" />
+          <Property Name="validation" Type="String" Unicode="true" FixedLength="false" MaxLength="Max" />
+          <Property Name="matiere" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="TeacherId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Teachers" Relationship="Test1.FK_TeacherNotation" FromRole="Notation" ToRole="Teacher" />
+        </EntityType>
+        <Association Name="FK_TeacherNotation">
+          <End Type="Test1.Teacher" Role="Teacher" Multiplicity="1" />
+          <End Type="Test1.Notation" Role="Notation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Teacher">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notation">
+              <PropertyRef Name="TeacherId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Question" Relationship="Test1.CourseQuestion" FromRole="Course" ToRole="Question" />
+        </EntityType>
+        <Association Name="CourseQuestion">
+          <End Type="Test1.Course" Role="Course" Multiplicity="1" />
+          <End Type="Test1.Question" Role="Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="CourseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Test1StoreContainer" CdmEntityContainer="Test1Container">
+    <EntitySetMapping Name="Questions">
+      <EntityTypeMapping TypeName="IsTypeOf(Test1.Question)">
+        <MappingFragment StoreEntitySet="Questions">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="content" ColumnName="content" />
+          <ScalarProperty Name="bonus" ColumnName="bonus" />
+          <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Teachers">
+      <EntityTypeMapping TypeName="IsTypeOf(Test1.Teacher)">
+        <MappingFragment StoreEntitySet="Teachers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="firstname" ColumnName="firstname" />
+          <ScalarProperty Name="campus" ColumnName="campus" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="campus_would_teach" ColumnName="campus_would_teach" />
+          <ScalarProperty Name="campus_already_teach" ColumnName="campus_already_teach" />
+          <ScalarProperty Name="courses_already_teach" ColumnName="courses_already_teach" />
+          <ScalarProperty Name="courses_would_teach" ColumnName="courses_would_teach" />
+          <ScalarProperty Name="current_promotion" ColumnName="current_promotion" />
+          <ScalarProperty Name="comments" ColumnName="comments" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Notations">
+      <EntityTypeMapping TypeName="IsTypeOf(Test1.Notation)">
+        <MappingFragment StoreEntitySet="Notations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="certification" ColumnName="certification" />
+          <ScalarProperty Name="validation" ColumnName="validation" />
+          <ScalarProperty Name="matiere" ColumnName="matiere" />
+          <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Courses">
+      <EntityTypeMapping TypeName="IsTypeOf(Test1.Course)">
+        <MappingFragment StoreEntitySet="Courses">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

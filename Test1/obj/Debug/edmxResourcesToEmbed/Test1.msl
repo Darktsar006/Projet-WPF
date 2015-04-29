@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Test1StoreContainer" CdmEntityContainer="Test1Container">
+    <EntitySetMapping Name="Questions">
+      <EntityTypeMapping TypeName="IsTypeOf(Test1.Question)">
+        <MappingFragment StoreEntitySet="Questions">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="content" ColumnName="content" />
+          <ScalarProperty Name="bonus" ColumnName="bonus" />
+          <ScalarProperty Name="CourseId" ColumnName="CourseId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Teachers">
+      <EntityTypeMapping TypeName="IsTypeOf(Test1.Teacher)">
+        <MappingFragment StoreEntitySet="Teachers">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="firstname" ColumnName="firstname" />
+          <ScalarProperty Name="campus" ColumnName="campus" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="campus_would_teach" ColumnName="campus_would_teach" />
+          <ScalarProperty Name="campus_already_teach" ColumnName="campus_already_teach" />
+          <ScalarProperty Name="courses_already_teach" ColumnName="courses_already_teach" />
+          <ScalarProperty Name="courses_would_teach" ColumnName="courses_would_teach" />
+          <ScalarProperty Name="current_promotion" ColumnName="current_promotion" />
+          <ScalarProperty Name="comments" ColumnName="comments" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Notations">
+      <EntityTypeMapping TypeName="IsTypeOf(Test1.Notation)">
+        <MappingFragment StoreEntitySet="Notations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="certification" ColumnName="certification" />
+          <ScalarProperty Name="validation" ColumnName="validation" />
+          <ScalarProperty Name="matiere" ColumnName="matiere" />
+          <ScalarProperty Name="TeacherId" ColumnName="TeacherId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Courses">
+      <EntityTypeMapping TypeName="IsTypeOf(Test1.Course)">
+        <MappingFragment StoreEntitySet="Courses">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

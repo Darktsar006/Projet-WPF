@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Test1.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="Test1StoreContainer">
+    <EntitySet Name="Questions" EntityType="Test1.Store.Questions" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Teachers" EntityType="Test1.Store.Teachers" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Notations" EntityType="Test1.Store.Notations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Courses" EntityType="Test1.Store.Courses" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="FK_TeacherNotation" Association="Test1.Store.FK_TeacherNotation">
+      <End Role="Teacher" EntitySet="Teachers" />
+      <End Role="Notation" EntitySet="Notations" />
+    </AssociationSet>
+    <AssociationSet Name="CourseQuestion" Association="Test1.Store.CourseQuestion">
+      <End Role="Course" EntitySet="Courses" />
+      <End Role="Question" EntitySet="Questions" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Questions">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="content" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="bonus" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="CourseId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Teachers">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="firstname" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="campus" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="email" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="campus_would_teach" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="campus_already_teach" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="courses_already_teach" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="courses_would_teach" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="current_promotion" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="comments" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Notations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="certification" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="validation" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="matiere" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="TeacherId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Courses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="name" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_TeacherNotation">
+    <End Role="Teacher" Type="Test1.Store.Teachers" Multiplicity="1" />
+    <End Role="Notation" Type="Test1.Store.Notations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teacher">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Notation">
+        <PropertyRef Name="TeacherId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CourseQuestion">
+    <End Role="Course" Type="Test1.Store.Courses" Multiplicity="1" />
+    <End Role="Question" Type="Test1.Store.Questions" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Question">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

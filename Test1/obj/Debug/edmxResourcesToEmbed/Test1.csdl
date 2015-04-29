@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="Test1" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+  <EntityContainer Name="Test1Container" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Questions" EntityType="Test1.Question" />
+    <EntitySet Name="Teachers" EntityType="Test1.Teacher" />
+    <EntitySet Name="Notations" EntityType="Test1.Notation" />
+    <AssociationSet Name="FK_TeacherNotation" Association="Test1.FK_TeacherNotation">
+      <End Role="Teacher" EntitySet="Teachers" />
+      <End Role="Notation" EntitySet="Notations" />
+    </AssociationSet>
+    <EntitySet Name="Courses" EntityType="Test1.Course" />
+    <AssociationSet Name="CourseQuestion" Association="Test1.CourseQuestion">
+      <End Role="Course" EntitySet="Courses" />
+      <End Role="Question" EntitySet="Questions" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Question">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="content" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="bonus" Type="String" Unicode="true" FixedLength="false" MaxLength="Max" />
+    <NavigationProperty Name="Course" Relationship="Test1.CourseQuestion" FromRole="Question" ToRole="Course" />
+    <Property Name="CourseId" Type="Int32" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Teacher">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="firstname" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="campus" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="email" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="campus_would_teach" Type="String" Unicode="true" FixedLength="false" MaxLength="Max" />
+    <Property Name="campus_already_teach" Type="String" Unicode="true" FixedLength="false" MaxLength="Max" Nullable="true" />
+    <Property Name="courses_already_teach" Type="String" Unicode="true" FixedLength="false" MaxLength="Max" Nullable="true" />
+    <Property Name="courses_would_teach" Type="String" Unicode="true" FixedLength="false" MaxLength="Max" />
+    <Property Name="current_promotion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="comments" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Notations" Relationship="Test1.FK_TeacherNotation" FromRole="Teacher" ToRole="Notation" />
+  </EntityType>
+  <EntityType Name="Notation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="certification" Type="String" Unicode="true" FixedLength="false" MaxLength="Max" />
+    <Property Name="validation" Type="String" Unicode="true" FixedLength="false" MaxLength="Max" />
+    <Property Name="matiere" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="TeacherId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Teachers" Relationship="Test1.FK_TeacherNotation" FromRole="Notation" ToRole="Teacher" />
+  </EntityType>
+  <Association Name="FK_TeacherNotation">
+    <End Type="Test1.Teacher" Role="Teacher" Multiplicity="1" />
+    <End Type="Test1.Notation" Role="Notation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Teacher">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Notation">
+        <PropertyRef Name="TeacherId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="Course">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="name" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="Question" Relationship="Test1.CourseQuestion" FromRole="Course" ToRole="Question" />
+  </EntityType>
+  <Association Name="CourseQuestion">
+    <End Type="Test1.Course" Role="Course" Multiplicity="1" />
+    <End Type="Test1.Question" Role="Question" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Course">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Question">
+        <PropertyRef Name="CourseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
